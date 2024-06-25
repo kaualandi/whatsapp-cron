@@ -18,12 +18,12 @@ const start = async (client: Client) => {
     if (state === "CONFLICT" || state === "UNLAUNCHED") client.forceRefocus();
   });
 
-  client.onMessage(async (message) => {
-    client.sendText(
-      message.from,
-      "Olá! Não atendemos por esse número, por favor, entre em contato com:..."
-    );
-  });
+  // client.onMessage(async (message) => {
+  //   client.sendText(
+  //     message.from,
+  //     "Olá! Não atendemos por esse número, por favor, entre em contato com:..."
+  //   );
+  // });
 
   app.use(client.middleware(true));
   app.listen(port, function () {

@@ -1,7 +1,6 @@
 import { Client, STATE, create } from "@open-wa/wa-automate";
 import { routerOutlet } from "./app/controller";
 import { options } from "./config/options";
-import { msgHandler } from "./msgHandler";
 require("dotenv").config();
 
 const express = require("express");
@@ -20,7 +19,10 @@ const start = async (client: Client) => {
   });
 
   client.onMessage(async (message) => {
-    await msgHandler(client, message);
+    client.sendText(
+      message.from,
+      "Olá! Não atendemos por esse número, por favor, entre em contato com:..."
+    );
   });
 
   app.use(client.middleware(true));

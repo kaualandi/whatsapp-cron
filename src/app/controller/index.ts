@@ -140,15 +140,18 @@ export function routerOutlet(app: any, client: Client) {
         example: {
           message: "Olá, tudo bem?",
           number: "5511999999999",
+          image: "Imagem em base64 (opicional)",
         },
       });
       console.log(`${isoDate} - Parâmetros inválidos!`);
       return;
     }
 
+    console.log("Verificando se o número possui WhatsApp...");
     const userHasWA = await client.checkNumberStatus(
       `${number}@c.us` as ContactId
     );
+    console.log("Verificação concluída!");
 
     if (userHasWA.status != 200) {
       console.log(`${isoDate} - Usuário ${number} não possui WhatsApp!`);
@@ -162,20 +165,26 @@ export function routerOutlet(app: any, client: Client) {
       return;
     }
 
+    console.log("Usuário possúi WhatsApp!");
+
     let sended;
 
     if (image) {
+      console.log("Enviando mensagem com imagem e texto...");
       sended = await client.sendImage(
         `${number}@c.us`,
         image,
         "image",
         message
       );
+      console.log("Mensagem enviada!");
     } else {
+      console.log("Enviando mensagem somente com texto...");
       sended = await client.sendText(`${number}@c.us`, message);
+      console.log("Mensagem enviada!");
     }
 
-    console.log(sended);
+    console.log("Resposta do envio:", sended);
 
     if (!sended.toString().startsWith("true")) {
       console.log(`${isoDate} - Erro ao enviar mensagem para ${number}!`);

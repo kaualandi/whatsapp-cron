@@ -13,7 +13,13 @@ export function routerOutlet(app: Application, client: Client) {
   app.get("/chats", async (req: Request, res: Response) => {
     try {
       const chats = await client.getAllChats();
-      res.status(200).json(chats);
+      const filtered = chats.map((chat) => {
+        return {
+          id: chat.id,
+          name: chat.formattedTitle,
+        };
+      });
+      res.status(200).json(filtered);
     } catch (error) {
       res.status(500).json(error);
     }

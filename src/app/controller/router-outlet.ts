@@ -1,13 +1,22 @@
 import { Client, ContactId } from "@open-wa/wa-automate";
-import { Request, Response } from "express";
+import { Application, Request, Response } from "express";
 
-export function routerOutlet(app: any, client: Client) {
+export function routerOutlet(app: Application, client: Client) {
   app.get("/", (req: Request, res: Response) => {
     res.status(200).json({
       worked: true,
       detail: "Servidor funcionando!",
       version: "1.2.0",
     });
+  });
+
+  app.get("/chats", async (req: Request, res: Response) => {
+    try {
+      const chats = await client.getAllChats();
+      res.status(200).json(chats);
+    } catch (error) {
+      res.status(500).json(error);
+    }
   });
 
   app.post("/send-texts-images", async (req: Request, res: Response) => {

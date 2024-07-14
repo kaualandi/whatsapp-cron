@@ -3,12 +3,14 @@ import { routerOutlet } from "./app/controller/router-outlet";
 import { options } from "./config/options";
 import { Application } from "express";
 import { cronRegister } from "./app/controller/cron";
+import cors from "cors";
 require("dotenv").config();
 
 const express = require("express");
 const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 const port = process.env.PORT_EXPRESS || 80;
 

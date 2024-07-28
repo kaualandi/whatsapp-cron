@@ -43,7 +43,10 @@ export function cronRegister(client: Client) {
               schedule.body
             );
           } else {
-            await client.sendText(schedule.chatId, schedule.body);
+            await client.sendLinkWithAutoPreview(
+              schedule.chatId,
+              schedule.body
+            );
           }
           console.log("ENVIADO PARA ==>", schedule.chatId);
           await axios.delete(`/schedules/${schedule.id}`);
